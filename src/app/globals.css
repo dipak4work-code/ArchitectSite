@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Luxury Architecture Palette */
+    --gold: #C9A250;
+    --gold-light: #E8C97A;
+    --gold-dark: #9A7835;
+    --gold-muted: #D4B483;
+    --charcoal: #141414;
+    --charcoal-2: #1E1E1E;
+    --charcoal-3: #2A2A2A;
+    --stone: #F7F4EF;
+    --stone-2: #EDE7DA;
+    --stone-3: #D9CEBC;
+    --warm-white: #FDFBF8;
+
+    /* shadcn tokens */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
+    --primary: 38 55% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 36 30% 93%;
+    --secondary-foreground: 0 0% 8%;
+    --muted: 36 20% 94%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 38 55% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 36 20% 88%;
+    --input: 36 20% 88%;
+    --ring: 38 55% 55%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    margin: 0;
+    background: var(--warm-white);
+    color: var(--charcoal);
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+
+  /* ── Section Labels ─────────────────────────────────── */
+  .section-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    position: relative;
+    padding-left: 2.5rem;
+  }
+  .section-label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.75rem;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  /* ── Gradients ──────────────────────────────────────── */
+  .luxury-gradient {
+    background: linear-gradient(135deg, var(--charcoal) 0%, var(--charcoal-3) 100%);
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+  }
+
+  .hero-gradient {
+    background: linear-gradient(
+      160deg,
+      rgba(20, 20, 20, 0.85) 0%,
+      rgba(30, 20, 10, 0.70) 50%,
+      rgba(20, 20, 20, 0.80) 100%
+    );
+  }
+
+  /* ── Buttons ────────────────────────────────────────── */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+    color: var(--charcoal);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(201, 162, 80, 0.35);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: white;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.85);
+    transform: translateY(-2px);
+  }
+
+  /* ── Cards ──────────────────────────────────────────── */
+  .card-stone {
+    background: var(--stone);
+    border: 1px solid var(--stone-3);
+  }
+
+  .card-dark {
+    background: var(--charcoal-2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .card-glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* ── Hover Effects ──────────────────────────────────── */
+  .hover-lift {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.14);
+  }
+
+  /* ── Gold Divider ───────────────────────────────────── */
+  .gold-divider {
+    width: 3rem;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 1.25rem 0;
+  }
+
+  /* ── Text Shadows ───────────────────────────────────── */
+  .text-shadow {
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+  .text-shadow-lg {
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
+  }
+
+  /* ── Form Inputs ────────────────────────────────────── */
+  .input-luxury {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 0.95rem;
+    transition: border-color 0.25s ease, background 0.25s ease;
+    outline: none;
+  }
+  .input-luxury::placeholder { color: rgba(255,255,255,0.35); }
+  .input-luxury:focus {
+    border-color: var(--gold);
+    background: rgba(201, 162, 80, 0.06);
+  }
+
+  /* ── Scroll indicator ───────────────────────────────── */
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
+}
