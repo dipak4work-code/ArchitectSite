@@ -1,0 +1,35 @@
+[
+  {
+    "id": "test1",
+    "name": "Rajesh Kumar",
+    "position": "CEO",
+    "company": "TechCorp India",
+    "content": "The architectural vision brought our corporate headquarters to life in ways we never imagined. The attention to detail and innovative design solutions exceeded our expectations.",
+    "rating": 5,
+    "image": "",
+    "approved": true,
+    "createdAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "test2",
+    "name": "Priya Sharma",
+    "position": "Homeowner",
+    "company": "Private Residence",
+    "content": "Our dream home became reality thanks to this exceptional team. They understood our vision perfectly and created a space that feels both luxurious and comfortable.",
+    "rating": 5,
+    "image": "",
+    "approved": true,
+    "createdAt": "2024-01-10T10:00:00Z"
+  },
+  {
+    "id": "test3",
+    "name": "Dr. Amit Patel",
+    "position": "Director",
+    "company": "City Hospital",
+    "content": "The healthcare facility design was outstanding. They incorporated modern medical requirements with patient comfort and created an environment conducive to healing.",
+    "rating": 5,
+    "image": "",
+    "approved": true,
+    "createdAt": "2024-01-05T10:00:00Z"
+  }
+]

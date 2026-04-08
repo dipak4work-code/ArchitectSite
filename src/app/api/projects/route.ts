@@ -1,28 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { readStore, writeStore, generateId } from '@/lib/localStore'
 
-// Mock data - replace with actual database queries
-const projects = [
-  {
-    id: 1,
-    title: 'Modern Villa Retreat',
-    category: 'Residential',
-    location: 'Mumbai, India',
-    description: 'A contemporary villa design blending traditional Indian elements with modern aesthetics.',
-    image: '/api/placeholder/600/400',
-    featured: true,
-    createdAt: '2024-01-15T10:00:00Z'
-  },
-  {
-    id: 2,
-    title: 'Corporate Headquarters',
-    category: 'Commercial',
-    location: 'Delhi, India',
-    description: 'State-of-the-art office complex designed for productivity and employee well-being.',
-    image: '/api/placeholder/600/400',
-    featured: true,
-    createdAt: '2024-01-10T10:00:00Z'
-  }
-]
+type Project = {
+  id: string
+  title: string
+  category: string
+  location: string
+  description: string
+  images: string[]
+  featured: boolean
+  createdAt: string
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -30,58 +18,45 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category')
     const featured = searchParams.get('featured')
 
-    let filteredProjects = projects
+    let projects = readStore<Project>('projects')
 
-    if (category) {
-      filteredProjects = filteredProjects.filter(p => p.category.toLowerCase() === category.toLowerCase())
-    }
+    if (category) projects = projects.filter(p => p.category.toLowerCase() === category.toLowerCase())
+    if (featured === 'true') projects = projects.filter(p => p.featured)
 
-    if (featured === 'true') {
-      filteredProjects = filteredProjects.filter(p => p.featured)
-    }
+    projects = projects.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 
-    return NextResponse.json({
-      success: true,
-      data: filteredProjects
-    })
-  } catch (error) {
-    return NextResponse.json(
-      { success: false, error: 'Failed to fetch projects' },
-      { status: 500 }
-    )
+    return NextResponse.json({ success: true, data: projects })
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 })
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-
-    // Validate required fields
     const { title, category, location, description } = body
+
     if (!title || !category || !location || !description) {
-      return NextResponse.json(
-        { success: false, error: 'Missing required fields' },
-        { status: 400 }
-      )
+      return NextResponse.json({ success: false, error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Create new project (mock implementation)
-    const newProject = {
-      id: projects.length + 1,
-      ...body,
-      createdAt: new Date().toISOString()
+    const projects = readStore<Project>('projects')
+    const newProject: Project = {
+      id: generateId(),
+      title,
+      category,
+      location,
+      description,
+      images: Array.isArray(body.images) ? body.images : [],
+      featured: body.featured || false,
+      createdAt: new Date().toISOString(),
     }
 
-    projects.push(newProject)
+    projects.unshift(newProject)
+    writeStore('projects', projects)
 
-    return NextResponse.json({
-      success: true,
-      data: newProject
-    }, { status: 201 })
-  } catch (error) {
-    return NextResponse.json(
-      { success: false, error: 'Failed to create project' },
-      { status: 500 }
-    )
+    return NextResponse.json({ success: true, data: newProject }, { status: 201 })
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 })
   }
 }

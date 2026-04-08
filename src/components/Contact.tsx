@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 
 const contactInfo = [
@@ -11,15 +11,43 @@ const contactInfo = [
   { icon: Clock, title: 'Business Hours', details: ['Mon – Fri: 9:00 AM – 6:00 PM', 'Sat: 10:00 AM – 4:00 PM', 'Sun: Closed'] }
 ]
 
-export function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' })
+const emptyForm = { name: '', email: '', phone: '', subject: '', message: '' }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-  }
+type Status = 'idle' | 'sending' | 'success' | 'error'
+
+export function Contact() {
+  const [formData, setFormData] = useState(emptyForm)
+  const [status, setStatus] = useState<Status>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('sending')
+    setErrorMsg('')
+
+    try {
+      const res = await fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      const data = await res.json()
+
+      if (!data.success) throw new Error(data.error || 'Failed to send message')
+
+      setStatus('success')
+      setFormData(emptyForm)
+
+      // Reset to idle after 5s
+      setTimeout(() => setStatus('idle'), 5000)
+    } catch (err: any) {
+      setStatus('error')
+      setErrorMsg(err.message || 'Something went wrong. Please try again.')
+    }
   }
 
   return (
@@ -35,9 +63,7 @@ export function Contact() {
           className="text-center mb-16"
         >
           <span className="section-label" style={{ color: '#C9A250' }}>Let's Talk</span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 tracking-tight">
-            Get In Touch
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 tracking-tight">Get In Touch</h2>
           <p className="text-white/40 max-w-2xl mx-auto text-lg leading-relaxed">
             Ready to bring your architectural vision to life? Let's discuss your project
             and create something extraordinary together.
@@ -57,52 +83,89 @@ export function Contact() {
             <div className="p-8 rounded-2xl border border-white/8" style={{ background: '#1E1E1E' }}>
               <h3 className="text-xl font-bold text-white mb-7">Send us a Message</h3>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Full Name *</label>
-                    <input type="text" name="name" required value={formData.name} onChange={handleChange}
-                      className="input-luxury" placeholder="Your full name" />
+              {/* Success state */}
+              {status === 'success' ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center justify-center py-16 text-center"
+                >
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mb-5"
+                    style={{ background: 'rgba(201,162,80,0.15)' }}>
+                    <CheckCircle className="h-8 w-8" style={{ color: '#C9A250' }} />
                   </div>
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Email Address *</label>
-                    <input type="email" name="email" required value={formData.email} onChange={handleChange}
-                      className="input-luxury" placeholder="your@email.com" />
+                  <h4 className="text-xl font-bold text-white mb-2">Message Sent!</h4>
+                  <p className="text-white/50 text-sm max-w-xs">
+                    Thank you for reaching out. We'll get back to you within 24 hours.
+                  </p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid md:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Full Name *</label>
+                      <input type="text" name="name" required value={formData.name} onChange={handleChange}
+                        className="input-luxury" placeholder="Your full name" disabled={status === 'sending'} />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Email Address *</label>
+                      <input type="email" name="email" required value={formData.email} onChange={handleChange}
+                        className="input-luxury" placeholder="your@email.com" disabled={status === 'sending'} />
+                    </div>
                   </div>
-                </div>
 
-                <div className="grid md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Phone Number</label>
-                    <input type="tel" name="phone" value={formData.phone} onChange={handleChange}
-                      className="input-luxury" placeholder="+91 98765 43210" />
+                  <div className="grid md:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Phone Number</label>
+                      <input type="tel" name="phone" value={formData.phone} onChange={handleChange}
+                        className="input-luxury" placeholder="+91 98765 43210" disabled={status === 'sending'} />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Service *</label>
+                      <select name="subject" required value={formData.subject} onChange={handleChange}
+                        className="input-luxury" disabled={status === 'sending'}>
+                        <option value="" style={{ background: '#1E1E1E' }}>Select a service</option>
+                        <option value="Residential Design" style={{ background: '#1E1E1E' }}>Residential Design</option>
+                        <option value="Commercial Architecture" style={{ background: '#1E1E1E' }}>Commercial Architecture</option>
+                        <option value="Interior Design" style={{ background: '#1E1E1E' }}>Interior Design</option>
+                        <option value="Renovation & Restoration" style={{ background: '#1E1E1E' }}>Renovation & Restoration</option>
+                        <option value="Consultation Services" style={{ background: '#1E1E1E' }}>Consultation Services</option>
+                        <option value="Other" style={{ background: '#1E1E1E' }}>Other</option>
+                      </select>
+                    </div>
                   </div>
+
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Service *</label>
-                    <select name="subject" required value={formData.subject} onChange={handleChange} className="input-luxury">
-                      <option value="" style={{ background: '#1E1E1E' }}>Select a service</option>
-                      <option value="residential" style={{ background: '#1E1E1E' }}>Residential Design</option>
-                      <option value="commercial" style={{ background: '#1E1E1E' }}>Commercial Architecture</option>
-                      <option value="interior" style={{ background: '#1E1E1E' }}>Interior Design</option>
-                      <option value="renovation" style={{ background: '#1E1E1E' }}>Renovation & Restoration</option>
-                      <option value="consultation" style={{ background: '#1E1E1E' }}>Consultation Services</option>
-                      <option value="other" style={{ background: '#1E1E1E' }}>Other</option>
-                    </select>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Message *</label>
+                    <textarea name="message" required rows={5} value={formData.message} onChange={handleChange}
+                      className="input-luxury resize-none" placeholder="Tell us about your project..."
+                      disabled={status === 'sending'} />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Message *</label>
-                  <textarea name="message" required rows={5} value={formData.message} onChange={handleChange}
-                    className="input-luxury resize-none" placeholder="Tell us about your project..." />
-                </div>
+                  {/* Error */}
+                  {status === 'error' && (
+                    <div className="flex items-center gap-2.5 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                      <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
+                      <p className="text-sm text-red-400">{errorMsg}</p>
+                    </div>
+                  )}
 
-                <button type="submit"
-                  className="w-full btn-primary py-4 px-6 rounded-lg font-bold text-sm tracking-wide flex items-center justify-center gap-2.5 mt-2">
-                  Send Message
-                  <Send className="h-4 w-4" />
-                </button>
-              </form>
+                  <button type="submit" disabled={status === 'sending'}
+                    className="w-full btn-primary py-4 px-6 rounded-lg font-bold text-sm tracking-wide flex items-center justify-center gap-2.5 mt-2 disabled:opacity-60 disabled:cursor-not-allowed">
+                    {status === 'sending' ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message
+                        <Send className="h-4 w-4" />
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
             </div>
           </motion.div>
 
@@ -140,7 +203,7 @@ export function Contact() {
             {/* Map placeholder */}
             <div className="rounded-2xl overflow-hidden border border-white/8 aspect-video flex items-center justify-center"
               style={{ background: '#1E1E1E' }}>
-              <div className="text-center text-white/20">
+              <div className="text-center">
                 <MapPin className="h-10 w-10 mx-auto mb-2" style={{ color: '#C9A250', opacity: 0.5 }} />
                 <p className="text-sm font-medium text-white/30">Interactive Map</p>
                 <p className="text-xs text-white/20">Coming Soon</p>

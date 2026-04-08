@@ -1,0 +1,24 @@
+[
+  {
+    "id": "blog1",
+    "title": "Sustainable Architecture: Building for Tomorrow",
+    "excerpt": "Exploring innovative sustainable design practices that reduce environmental impact while creating beautiful, functional spaces.",
+    "author": "Arun Sharma",
+    "category": "Sustainability",
+    "image": "/uploads/architect-site/blog/1775644233420-bed-room-2-view-1.png",
+    "readTime": "5 min read",
+    "published": true,
+    "createdAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "blog2",
+    "title": "The Evolution of Modern Indian Architecture",
+    "excerpt": "How contemporary Indian architecture blends traditional elements with modern design principles to create unique cultural spaces.",
+    "author": "Priya Patel",
+    "category": "Design Trends",
+    "image": "/uploads/architect-site/blog/1775644261029-living-view-7.png",
+    "readTime": "7 min read",
+    "published": true,
+    "createdAt": "2024-01-10T10:00:00Z"
+  }
+]
