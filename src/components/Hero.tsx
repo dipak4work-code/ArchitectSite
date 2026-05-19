@@ -23,7 +23,7 @@ export function Hero() {
             backgroundRepeat: 'repeat', backgroundSize: '128px',
           }} />
         <img
-          src="/api/placeholder/1920/1080"
+          src="/images/hero.jpg"
           alt="Modern architectural design"
           className="w-full h-full object-cover"
         />
