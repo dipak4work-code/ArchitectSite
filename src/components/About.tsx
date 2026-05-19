@@ -26,7 +26,7 @@ export function About() {
           >
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="/api/placeholder/600/750"
+                src="/images/team.jpg"
                 alt="Shreeji Associate team at work"
                 className="w-full h-full object-cover"
               />
