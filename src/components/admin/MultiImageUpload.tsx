@@ -198,7 +198,7 @@ export function MultiImageUpload({
                 <p className="text-sm font-medium text-gray-700">
                   Drop images here or <span className="text-indigo-600">browse</span>
                 </p>
-                <p className="text-xs text-gray-400 mt-1">PNG, JPG, WebP — up to {maxImages} images, 10MB each</p>
+                <p className="text-xs text-gray-400 mt-1">PNG, JPG, WebP -- up to {maxImages} images, 10MB each</p>
               </div>
             </>
           )}

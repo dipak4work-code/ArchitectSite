@@ -8,24 +8,24 @@ export default function AdminSettings() {
   const [saved, setSaved] = useState(false)
 
   const [general, setGeneral] = useState({
-    siteName: 'Architect Studio',
-    tagline: 'Crafting Tomorrow\'s Architectural Dreams',
-    email: 'contact@architectstudio.in',
-    phone: '+91 98765 43210',
-    address: 'Mumbai, Maharashtra, India'
+    siteName: 'Shreeji Associate',
+    tagline: 'Building Dreams, Creating Spaces',
+    email: 'jayshah5059@gmail.com',
+    phone: '+91 9173034401',
+    address: 'FF 1, Sheeltal Plaza, Ajwa Road, Vadodara, Gujarat'
   })
 
   const [social, setSocial] = useState({
-    instagram: 'https://instagram.com/architectstudio',
-    linkedin: 'https://linkedin.com/company/architectstudio',
-    twitter: 'https://twitter.com/architectstudio',
+    instagram: 'https://instagram.com/shreejiassociate',
+    linkedin: 'https://linkedin.com/company/shreejiassociate',
+    twitter: 'https://twitter.com/shreejiassociate',
     facebook: ''
   })
 
   const [seo, setSeo] = useState({
-    metaTitle: 'Architect Studio - Modern Architectural Design',
-    metaDescription: 'Leading architectural firm in India specializing in residential, commercial, and public spaces.',
-    keywords: 'architecture, design, India, residential, commercial'
+    metaTitle: 'Shreeji Associate - Construction & Interior Company Vadodara',
+    metaDescription: 'Shreeji Associate -- dedicated construction and interior company in Vadodara specializing in residential construction, commercial projects, and interior designing.',
+    keywords: 'construction, interior design, Vadodara, Shreeji Associate, residential, commercial, renovation, turnkey solutions'
   })
 
   function handleSave(e: React.FormEvent) {

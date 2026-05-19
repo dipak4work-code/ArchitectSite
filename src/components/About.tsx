@@ -4,10 +4,10 @@ import { motion } from 'framer-motion'
 import { Award, Users, MapPin, Calendar } from 'lucide-react'
 
 const stats = [
-  { icon: Award, label: 'Awards Won', value: '50+' },
-  { icon: Users, label: 'Projects Done', value: '200+' },
-  { icon: MapPin, label: 'Cities Served', value: '25+' },
-  { icon: Calendar, label: 'Years Experience', value: '15+' },
+  { icon: Award, label: 'Projects Done', value: '50+' },
+  { icon: Users, label: 'Happy Clients', value: '40+' },
+  { icon: Calendar, label: 'Years Experience', value: '6+' },
+  { icon: MapPin, label: 'Services Offered', value: '6' },
 ]
 
 export function About() {
@@ -27,7 +27,7 @@ export function About() {
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
               <img
                 src="/api/placeholder/600/750"
-                alt="Architect at work"
+                alt="Shreeji Associate team at work"
                 className="w-full h-full object-cover"
               />
               {/* Gold corner accent */}
@@ -51,8 +51,8 @@ export function About() {
                   <Award className="h-6 w-6 text-[#141414]" />
                 </div>
                 <div>
-                  <div className="font-bold text-white text-sm">Award Winning</div>
-                  <div className="text-xs text-white/50 mt-0.5">Architecture Firm</div>
+                  <div className="font-bold text-white text-sm">Trusted Partner</div>
+                  <div className="text-xs text-white/50 mt-0.5">Jeevandeep Trust College</div>
                 </div>
               </div>
             </motion.div>
@@ -66,7 +66,7 @@ export function About() {
               className="absolute -top-4 -right-4 w-20 h-20 rounded-full flex flex-col items-center justify-center shadow-xl"
               style={{ background: 'linear-gradient(135deg, #E8C97A, #9A7835)' }}
             >
-              <div className="text-2xl font-bold text-[#141414] leading-none">15</div>
+              <div className="text-2xl font-bold text-[#141414] leading-none">6+</div>
               <div className="text-[9px] font-bold uppercase tracking-wider text-[#141414]/70">Years</div>
             </motion.div>
           </motion.div>
@@ -82,21 +82,25 @@ export function About() {
             <span className="section-label">Our Story</span>
 
             <h2 className="text-4xl md:text-5xl font-bold text-[#141414] mb-6 leading-tight tracking-tight">
-              Crafting Architectural
-              <span className="block" style={{ color: '#C9A250' }}>Excellence Since 2009</span>
+              Building Dreams,
+              <span className="block" style={{ color: '#C9A250' }}>Creating Spaces</span>
             </h2>
 
             <div className="gold-divider" />
 
             <p className="text-[#141414]/65 mb-5 leading-relaxed text-lg">
-              With over 15 years of experience, we specialize in creating innovative spaces that
-              harmonize with their environment while pushing the boundaries of modern design.
+              Shreeji Associate is a dedicated construction and interior company built on quality, trust,
+              innovation, and commitment. Founded by <strong className="text-[#141414]/80">Mr. Jay B. Shah</strong> (Civil Engineer),
+              with 6+ years of practical site experience, our mission is to deliver complete construction
+              and interior solutions that turn our clients' dreams into reality.
             </p>
 
             <p className="text-[#141414]/55 mb-10 leading-relaxed">
-              From residential masterpieces to commercial landmarks, every project reflects our
-              commitment to sustainability, functionality, and aesthetic perfection. We believe
-              great architecture should inspire, endure, and enhance the lives of those who experience it.
+              We specialize in residential construction, commercial projects, interior designing,
+              renovation, turnkey solutions, and site consultancy -- managing every stage with
+              professionalism and attention to detail. One of our proud achievements is securing the
+              commercial project contract for <em>Jeevandeep Trust College</em>, reflecting the trust
+              clients place in our work.
             </p>
 
             {/* Stats */}

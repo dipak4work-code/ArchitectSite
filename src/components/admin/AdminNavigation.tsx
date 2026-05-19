@@ -13,7 +13,8 @@ import {
   Menu,
   X,
   Building2,
-  ChevronRight
+  ChevronRight,
+  Calculator,
 } from 'lucide-react'
 
 const navigation = [
@@ -22,6 +23,7 @@ const navigation = [
   { name: 'Blog', href: '/admin/blog', icon: FileText },
   { name: 'Testimonials', href: '/admin/testimonials', icon: MessageSquare },
   { name: 'Messages', href: '/admin/messages', icon: Users },
+  { name: 'Quotation', href: '/admin/quotation', icon: Calculator },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 
@@ -39,7 +41,7 @@ export function AdminNavigation() {
         />
       )}
 
-      {/* Sidebar — always fixed, never static */}
+      {/* Sidebar -- always fixed, never static */}
       <aside className={`
         fixed inset-y-0 left-0 z-50 w-64 flex flex-col
         bg-gradient-to-b from-slate-900 via-slate-900 to-slate-800
@@ -55,7 +57,7 @@ export function AdminNavigation() {
             </div>
             <div>
               <span className="text-white font-bold text-sm leading-none">Admin Panel</span>
-              <span className="block text-slate-400 text-xs mt-0.5">Architect Studio</span>
+              <span className="block text-slate-400 text-xs mt-0.5">Shreeji Associate</span>
             </div>
           </Link>
           <button
@@ -103,7 +105,7 @@ export function AdminNavigation() {
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-400 hover:bg-slate-700/60 hover:text-white transition-all duration-200"
           >
             <div className="w-7 h-7 rounded-full bg-slate-700 flex items-center justify-center">
-              <span className="text-xs font-bold text-slate-300">AS</span>
+              <span className="text-xs font-bold text-slate-300">SA</span>
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-xs font-medium text-slate-300 truncate">Back to Website</div>

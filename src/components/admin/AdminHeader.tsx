@@ -1,8 +1,17 @@
 'use client'
 
-import { Bell, Search, User, ChevronDown } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Bell, Search, User, LogOut } from 'lucide-react'
 
 export function AdminHeader() {
+  const router = useRouter()
+
+  async function handleLogout() {
+    await fetch('/api/auth/logout', { method: 'POST' })
+    router.push('/admin/login')
+    router.refresh()
+  }
+
   return (
     <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
       <div className="flex items-center justify-between h-16 px-6">
@@ -23,11 +32,10 @@ export function AdminHeader() {
             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-indigo-500 rounded-full ring-2 ring-white" />
           </button>
 
-          {/* Divider */}
           <div className="w-px h-6 bg-gray-200" />
 
           {/* User */}
-          <button className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-gray-100 transition-colors group">
+          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-sm">
               <User className="h-4 w-4 text-white" />
             </div>
@@ -35,7 +43,18 @@ export function AdminHeader() {
               <div className="text-sm font-semibold text-gray-800 leading-none">Admin</div>
               <div className="text-xs text-gray-500 mt-0.5">Administrator</div>
             </div>
-            <ChevronDown className="h-4 w-4 text-gray-400 group-hover:text-gray-600 transition-colors hidden md:block" />
+          </div>
+
+          <div className="w-px h-6 bg-gray-200" />
+
+          {/* Logout */}
+          <button
+            onClick={handleLogout}
+            title="Sign out"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm text-gray-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+          >
+            <LogOut className="h-4 w-4" />
+            <span className="hidden md:inline font-medium">Sign Out</span>
           </button>
         </div>
       </div>

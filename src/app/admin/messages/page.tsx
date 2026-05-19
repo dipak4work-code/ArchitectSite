@@ -186,7 +186,7 @@ export default function AdminMessages() {
                     </div>
                     <div>
                       <span className="text-gray-400 text-xs uppercase tracking-wide font-semibold">Phone</span>
-                      <div className="font-medium text-gray-700 mt-0.5">{selected.phone || '—'}</div>
+                      <div className="font-medium text-gray-700 mt-0.5">{selected.phone || '--'}</div>
                     </div>
                     <div className="col-span-2">
                       <span className="text-gray-400 text-xs uppercase tracking-wide font-semibold">Email</span>

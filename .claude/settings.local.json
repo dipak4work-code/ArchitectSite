@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3000/api/quotation)",
+      "Bash(mkdir -p d:/Softwares/ArchitectSite/public/icons)",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"d:\\\\Softwares\\\\ArchitectSite\\\\android\\\\app\\\\src\\\\main\\\\assets\")",
+      "Bash(npx cap *)",
+      "Bash(npx tsc *)",
+      "Bash(del fix-chars.js)"
+    ],
+    "additionalDirectories": [
+      "d:\\Softwares\\ArchitectSite\\public"
+    ]
+  }
+}

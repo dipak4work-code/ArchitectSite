@@ -5,12 +5,11 @@ import Link from 'next/link'
 import { Menu, X, Building2 } from 'lucide-react'
 
 const navItems = [
-  { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
   { name: 'Services', href: '#services' },
   { name: 'Portfolio', href: '#portfolio' },
-  { name: 'Testimonials', href: '#testimonials' },
   { name: 'Blog', href: '#blog' },
+  { name: 'Quotation', href: '#quotation' },
   { name: 'Contact', href: '#contact' },
 ]
 
@@ -38,13 +37,13 @@ export function Navigation() {
               <Building2 className="h-5 w-5 text-[#141414]" />
             </div>
             <div className="leading-none">
-              <span className="text-white font-bold text-lg tracking-tight">Architect</span>
-              <span style={{ color: '#C9A250' }} className="font-bold text-lg tracking-tight">Studio</span>
+              <span className="text-white font-bold text-lg tracking-tight">Shreeji</span>
+              <span style={{ color: '#C9A250' }} className="font-bold text-lg tracking-tight"> Associate</span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-5 lg:gap-8">
             {navItems.map((item) => (
               <Link
                 key={item.name}

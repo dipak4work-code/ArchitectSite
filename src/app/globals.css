@@ -62,25 +62,24 @@
 
   /* ── Section Labels ─────────────────────────────────── */
   .section-label {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 1rem;
-    position: relative;
-    padding-left: 2.5rem;
   }
-  .section-label::before {
+  .section-label::before,
+  .section-label::after {
     content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    display: block;
     width: 1.75rem;
     height: 1px;
     background: var(--gold);
+    flex-shrink: 0;
   }
 
   /* ── Gradients ──────────────────────────────────────── */

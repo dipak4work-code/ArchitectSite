@@ -1,12 +1,30 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Architect Studio - Premium Architectural Design',
-  description: 'Leading architectural firm specializing in innovative and sustainable design solutions for residential and commercial projects.',
+  title: 'Shreeji Associate - Construction & Interior Company',
+  description: 'Shreeji Associate -- dedicated construction and interior company in Vadodara specializing in residential construction, commercial projects, interior designing, renovation, and turnkey solutions.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Shreeji Associate',
+  },
+  icons: {
+    icon: '/icons/icon-192.png',
+    apple: '/icons/icon-192.png',
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#141414',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 }
 
 export default function RootLayout({

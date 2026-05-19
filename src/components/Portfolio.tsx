@@ -73,7 +73,7 @@ function ProjectCard({ project, index, onExpand }: {
           </div>
         )}
 
-        {/* Carousel controls — visible on hover when multiple images */}
+        {/* Carousel controls -- visible on hover when multiple images */}
         {total > 1 && (
           <>
             <button

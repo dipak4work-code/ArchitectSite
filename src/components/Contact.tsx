@@ -5,10 +5,10 @@ import { MapPin, Phone, Mail, Clock, Send, CheckCircle, AlertCircle, Loader2 } f
 import { useState } from 'react'
 
 const contactInfo = [
-  { icon: MapPin, title: 'Address', details: ['123 Architecture Avenue', 'Mumbai, Maharashtra 400001', 'India'] },
-  { icon: Phone, title: 'Phone', details: ['+91 98765 43210', '+91 98765 43211'] },
-  { icon: Mail, title: 'Email', details: ['info@architectstudio.com', 'projects@architectstudio.com'] },
-  { icon: Clock, title: 'Business Hours', details: ['Mon – Fri: 9:00 AM – 6:00 PM', 'Sat: 10:00 AM – 4:00 PM', 'Sun: Closed'] }
+  { icon: MapPin, title: 'Address', details: ['FF 1, Sheeltal Plaza, Nr. Mahavir Hall', 'Ajwa Road, Vadodara', 'Gujarat, India'] },
+  { icon: Phone, title: 'Phone', details: ['+91 9173034401'] },
+  { icon: Mail, title: 'Email', details: ['jayshah5059@gmail.com'] },
+  { icon: Clock, title: 'Business Hours', details: ['Mon - Fri: 9:00 AM - 6:00 PM', 'Sat: 10:00 AM - 4:00 PM', 'Sun: Closed'] }
 ]
 
 const emptyForm = { name: '', email: '', phone: '', subject: '', message: '' }
@@ -125,11 +125,12 @@ export function Contact() {
                       <select name="subject" required value={formData.subject} onChange={handleChange}
                         className="input-luxury" disabled={status === 'sending'}>
                         <option value="" style={{ background: '#1E1E1E' }}>Select a service</option>
-                        <option value="Residential Design" style={{ background: '#1E1E1E' }}>Residential Design</option>
-                        <option value="Commercial Architecture" style={{ background: '#1E1E1E' }}>Commercial Architecture</option>
-                        <option value="Interior Design" style={{ background: '#1E1E1E' }}>Interior Design</option>
-                        <option value="Renovation & Restoration" style={{ background: '#1E1E1E' }}>Renovation & Restoration</option>
-                        <option value="Consultation Services" style={{ background: '#1E1E1E' }}>Consultation Services</option>
+                        <option value="Residential Construction" style={{ background: '#1E1E1E' }}>Residential Construction</option>
+                        <option value="Commercial Projects" style={{ background: '#1E1E1E' }}>Commercial Projects</option>
+                        <option value="Interior Designing" style={{ background: '#1E1E1E' }}>Interior Designing</option>
+                        <option value="Renovation Work" style={{ background: '#1E1E1E' }}>Renovation Work</option>
+                        <option value="Turnkey Solutions" style={{ background: '#1E1E1E' }}>Turnkey Solutions</option>
+                        <option value="Site Consultancy" style={{ background: '#1E1E1E' }}>Site Consultancy</option>
                         <option value="Other" style={{ background: '#1E1E1E' }}>Other</option>
                       </select>
                     </div>

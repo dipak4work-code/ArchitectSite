@@ -5,12 +5,12 @@ import Link from 'next/link'
 
 const footerLinks = {
   services: [
-    { name: 'Residential Design', href: '#services' },
-    { name: 'Commercial Architecture', href: '#services' },
-    { name: 'Interior Design', href: '#services' },
-    { name: 'Renovation & Restoration', href: '#services' },
-    { name: 'Sustainable Design', href: '#services' },
-    { name: 'Consultation Services', href: '#services' }
+    { name: 'Residential Construction', href: '#services' },
+    { name: 'Commercial Projects', href: '#services' },
+    { name: 'Interior Designing', href: '#services' },
+    { name: 'Renovation Work', href: '#services' },
+    { name: 'Turnkey Solutions', href: '#services' },
+    { name: 'Site Consultancy', href: '#services' }
   ],
   company: [
     { name: 'About Us', href: '#about' },
@@ -46,13 +46,13 @@ export function Footer() {
                 <Building2 className="h-5 w-5 text-[#141414]" />
               </div>
               <span className="text-white font-bold text-lg tracking-tight">
-                Architect<span style={{ color: '#C9A250' }}>Studio</span>
+                Shreeji<span style={{ color: '#C9A250' }}> Associate</span>
               </span>
             </Link>
 
             <p className="text-white/35 text-sm leading-relaxed mb-7">
-              Crafting architectural excellence with innovative design solutions
-              that blend functionality, aesthetics, and sustainability.
+              A dedicated construction and interior company built on quality,
+              trust, innovation, and commitment -- turning clients' dreams into reality.
             </p>
 
             <div className="flex gap-3">
@@ -106,16 +106,16 @@ export function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: '#C9A250' }} />
                 <div className="text-sm text-white/35 leading-relaxed">
-                  123 Architecture Avenue<br />Mumbai, Maharashtra 400001<br />India
+                  FF 1, Sheeltal Plaza, Nr. Mahavir Hall<br />Ajwa Road, Vadodara<br />Gujarat, India
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 flex-shrink-0" style={{ color: '#C9A250' }} />
-                <span className="text-sm text-white/35">+91 98765 43210</span>
+                <span className="text-sm text-white/35">+91 9173034401</span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 flex-shrink-0" style={{ color: '#C9A250' }} />
-                <span className="text-sm text-white/35">info@architectstudio.com</span>
+                <span className="text-sm text-white/35">jayshah5059@gmail.com</span>
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/6">
           <p className="text-xs text-white/25">
-            © {new Date().getFullYear()} Architect Studio. All rights reserved.
+            © {new Date().getFullYear()} Shreeji Associate. All rights reserved.
           </p>
           <div className="flex gap-6">
             {['Privacy', 'Terms', 'Cookies'].map(item => (

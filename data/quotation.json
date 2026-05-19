@@ -1,0 +1,215 @@
+{
+  "sections": [
+    {
+      "id": "mainDoor",
+      "label": "Main Door",
+      "enabled": true,
+      "items": [
+        {
+          "id": "mainDoor_jali",
+          "label": "Designer Main Door",
+          "specs": [
+            "New Designer Flush Jali 30mm",
+            "Wooden Framing on Front",
+            "Jali Roller Lock",
+            "Handle up to 1000 Rs - 2 Nos."
+          ],
+          "dimUnit": "",
+          "rateType": "fixed",
+          "rate": 31000,
+          "defaultDim": 1
+        }
+      ]
+    },
+    {
+      "id": "drawingRoom",
+      "label": "Drawing Room",
+      "enabled": true,
+      "items": [
+        {
+          "id": "sofa",
+          "label": "Sofa",
+          "specs": [
+            "Gurgen MR 303 18mm & 12mm plywood - Hydraulic Slider",
+            "Laminates up to 1500 Rs/sheet",
+            "Kurl-On foam",
+            "4\" Form 1\" Soft memory foam - Seat",
+            "2\" Foam in Back",
+            "4 Pillows"
+          ],
+          "dimUnit": "Running Ft",
+          "rateType": "per_unit",
+          "rate": 4000,
+          "defaultDim": 14
+        },
+        {
+          "id": "centerTable",
+          "label": "Center Table (3' x 2')",
+          "specs": [],
+          "dimUnit": "",
+          "rateType": "fixed",
+          "rate": 10000,
+          "defaultDim": 1
+        },
+        {
+          "id": "tvUnit",
+          "label": "T.V. Unit (as per Design)",
+          "specs": [
+            "Gurgen MR 303 18mm & 12mm plywood",
+            "Wardrobe (5' x 1'6\")",
+            "Lauwers Fluted Panels",
+            "Laminates up to 1800 Rs/sheet"
+          ],
+          "dimUnit": "Sq.Ft",
+          "rateType": "per_sqft",
+          "rate": 1100,
+          "defaultDim": 32.5
+        }
+      ]
+    },
+    {
+      "id": "kitchen",
+      "label": "Kitchen",
+      "enabled": true,
+      "items": [
+        {
+          "id": "kitchenBase",
+          "label": "Kitchen - Base Unit",
+          "specs": [
+            "Tandem Basket Hydraulic Godrej Tools",
+            "Gurgen Face MR 710/HDHMR Sheets 18mm & 12mm plywood",
+            "S.S. Basket",
+            "Profile Handles up to 350 RS/piece",
+            "6 Basket",
+            "Side Corner Pull Out",
+            "Laminate Sheet up to 1700 Rs/Sheet"
+          ],
+          "dimUnit": "Sq.Ft",
+          "rateType": "per_sqft",
+          "rate": 2200,
+          "defaultDim": 20.5
+        },
+        {
+          "id": "upperCabinet",
+          "label": "Upper Cabinet / Crockery",
+          "specs": [
+            "Hydraulic Profile Wardrobe Glass",
+            "Gurgen MR 303 18mm & 12mm plywood",
+            "Glass (self)",
+            "Godrej Hydraulic Pumps",
+            "Profile Light under Wardrobe",
+            "Laminates up to 1700 Rs/sheet"
+          ],
+          "dimUnit": "Sq.Ft",
+          "rateType": "per_sqft",
+          "rate": 1350,
+          "defaultDim": 35.15
+        },
+        {
+          "id": "wardrobeShutter",
+          "label": "Wardrobe Shutter",
+          "specs": [
+            "Gurgen MR 303 18mm & 12mm plywood",
+            "Door Framing with Glass or 18mm Door",
+            "Profile Handles up to 350 RS/piece",
+            "Laminates up to 1700 Rs/sheet",
+            "Maliya is also Covered"
+          ],
+          "dimUnit": "Sq.Ft",
+          "rateType": "per_sqft",
+          "rate": 1300,
+          "defaultDim": 32
+        },
+        {
+          "id": "serviceTable",
+          "label": "Service Table",
+          "specs": [
+            "Gurgen MR 303 18mm & 12mm plywood",
+            "Laminates up to 1500 RS/Sheets",
+            "Handles up to 500 RS/Piece"
+          ],
+          "dimUnit": "Sq.Ft",
+          "rateType": "per_sqft",
+          "rate": 1250,
+          "defaultDim": 16.5
+        }
+      ]
+    }
+  ],
+  "bedroom": {
+    "enabled": true,
+    "minCount": 1,
+    "maxCount": 5,
+    "defaultCount": 2,
+    "template": [
+      {
+        "id": "hydraulicBed",
+        "label": "Hydraulic Bed",
+        "specs": [
+          "Gurgen Face Ply 18mm & 12mm Plywood",
+          "Laminates up to 1800 RS/Sheet",
+          "Godrej Hydraulic Pumps"
+        ],
+        "dimUnit": "Sq.Ft",
+        "rateType": "per_sqft",
+        "rate": 1000,
+        "defaultDim": 39
+      },
+      {
+        "id": "wardrobe",
+        "label": "Wardrobe",
+        "specs": [
+          "Gurgen 18mm & 12mm Plywood",
+          "Laminates up to 1800 RS/SQFT",
+          "Fabric Inner",
+          "4 Drawers with Multi locks",
+          "Handles up to 500 RS/Piece"
+        ],
+        "dimUnit": "Sq.Ft",
+        "rateType": "per_sqft",
+        "rate": 1300,
+        "defaultDim": 49
+      },
+      {
+        "id": "dressingTable",
+        "label": "Dressing Table",
+        "specs": [
+          "Gurgen 18mm Plywood",
+          "8mm Mirror",
+          "One Drawer and Wooden Top",
+          "No Storage"
+        ],
+        "dimUnit": "Sq.Ft",
+        "rateType": "per_sqft",
+        "rate": 600,
+        "defaultDim": 13
+      }
+    ]
+  },
+  "specifications": [
+    "No Changes after design is approved by Owner.",
+    "Plywood: Gurgen Face Ply (80 RS/Sq.ft - 18mm)",
+    "Laminates: 1mm ISI (+/-0.10%) good quality, Price up to 1800 Rs/Sheet",
+    "All Hydraulic appliances are from ISI Company including Pumps.",
+    "Extra Work for furniture: 1200 Rs/Sq.ft.",
+    "Veneer and Polish Work not included. Extra charges: 450 Rs/Sq.ft"
+  ],
+  "paymentTerms": [
+    {
+      "percent": 30,
+      "label": "Advance"
+    },
+    {
+      "percent": 25,
+      "label": "After 20 Days"
+    },
+    {
+      "percent": 25,
+      "label": "After 20 Days"
+    },
+    {
+      "percent": 20,
+      "label": "On Final Stage"
+    }
+  ]
+}
