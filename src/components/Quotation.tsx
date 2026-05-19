@@ -36,7 +36,10 @@ interface QData {
   paymentTerms: { percent: number; label: string }[]
 }
 
-const fmt = (n: number) => 'Rs.' + Math.round(n).toLocaleString('en-IN')
+const fmt = (n: number) => {
+  const rounded = Math.round(n)
+  try { return 'Rs.' + rounded.toLocaleString('en-IN') } catch { return 'Rs.' + rounded.toLocaleString() }
+}
 
 // ── dim key helpers ──────────────────────────────────────────────
 const brKey = (brIdx: number, itemId: string) => `br_${brIdx}_${itemId}`
