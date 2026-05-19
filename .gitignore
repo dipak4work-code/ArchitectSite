@@ -51,3 +51,10 @@ logs/
 # Temporary files
 tmp/
 temp/
+
+# Claude AI
+.claude/
+
+# Android / Capacitor (keep locally, not needed on Vercel)
+android/
+ios/
