@@ -116,7 +116,7 @@ export function Blog() {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <Link href="/blog" className="inline-flex items-center gap-2.5 btn-primary px-8 py-4 rounded-lg font-semibold text-sm tracking-wide">
+          <Link href="/#blog" className="inline-flex items-center gap-2.5 btn-primary px-8 py-4 rounded-lg font-semibold text-sm tracking-wide">
             View All Articles <ArrowRight className="h-4 w-4" />
           </Link>
         </motion.div>

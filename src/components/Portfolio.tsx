@@ -279,7 +279,7 @@ export function Portfolio() {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <Link href="/portfolio" className="inline-flex items-center gap-2.5 btn-primary px-8 py-4 rounded-lg font-semibold text-sm tracking-wide">
+          <Link href="/#portfolio" className="inline-flex items-center gap-2.5 btn-primary px-8 py-4 rounded-lg font-semibold text-sm tracking-wide">
             View All Projects <ExternalLink className="h-4 w-4" />
           </Link>
         </motion.div>

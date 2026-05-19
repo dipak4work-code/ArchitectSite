@@ -17,7 +17,7 @@ const footerLinks = {
     { name: 'Our Portfolio', href: '#portfolio' },
     { name: 'Testimonials', href: '#testimonials' },
     { name: 'Blog', href: '#blog' },
-    { name: 'Careers', href: '/careers' },
+    { name: 'Careers', href: '/#contact' },
     { name: 'Contact', href: '#contact' }
   ]
 }
