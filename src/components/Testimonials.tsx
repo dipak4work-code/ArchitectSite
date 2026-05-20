@@ -14,10 +14,10 @@ type Testimonial = {
 }
 
 const stats = [
-  { value: '98%', label: 'Client Satisfaction' },
-  { value: '200+', label: 'Projects Completed' },
-  { value: '15+', label: 'Years Experience' },
-  { value: '50+', label: 'Awards Won' },
+  { value: '40+', label: 'Projects Completed' },
+  { value: '6+', label: 'Years Experience' },
+  { value: '25+', label: 'Turnkey Projects' },
+  { value: '40+', label: 'Happy Clients' },
 ]
 
 export function Testimonials() {
