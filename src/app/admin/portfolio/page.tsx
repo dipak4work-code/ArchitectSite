@@ -30,6 +30,8 @@ export default function AdminPortfolio() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState(emptyForm)
   const [lightbox, setLightbox] = useState<{ images: string[]; idx: number } | null>(null)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [error, setError] = useState('')
 
   async function fetchProjects() {
     setLoading(true)
@@ -65,8 +67,22 @@ export default function AdminPortfolio() {
 
   async function handleDelete(id: string) {
     if (!confirm('Delete this project?')) return
-    await fetch(`/api/projects/${id}`, { method: 'DELETE' })
-    setProjects(prev => prev.filter(p => p.id !== id))
+    setDeletingId(id)
+    try {
+      const res = await fetch(`/api/projects/${id}`, { method: 'DELETE' })
+      const data = await res.json()
+      if (data.success) {
+        setProjects(prev => prev.filter(p => p.id !== id))
+      } else {
+        setError('Delete failed. Please try again.')
+        setTimeout(() => setError(''), 4000)
+      }
+    } catch {
+      setError('Delete failed. Please try again.')
+      setTimeout(() => setError(''), 4000)
+    } finally {
+      setDeletingId(null)
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -79,12 +95,14 @@ export default function AdminPortfolio() {
         })
         const data = await res.json()
         if (data.success) setProjects(prev => prev.map(p => p.id === editingId ? data.data : p))
+        else { setError('Save failed. Please try again.'); setTimeout(() => setError(''), 4000) }
       } else {
         const res = await fetch('/api/projects', {
           method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form)
         })
         const data = await res.json()
         if (data.success) setProjects(prev => [data.data, ...prev])
+        else { setError('Add failed. Please try again.'); setTimeout(() => setError(''), 4000) }
       }
       setShowForm(false)
     } finally {
@@ -104,6 +122,10 @@ export default function AdminPortfolio() {
           <Plus className="h-4 w-4" /> Add Project
         </button>
       </div>
+
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">{error}</div>
+      )}
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
@@ -195,8 +217,9 @@ export default function AdminPortfolio() {
                             <button onClick={() => openEdit(p)} className="p-1.5 text-gray-400 hover:text-indigo-600 rounded-lg hover:bg-indigo-50">
                               <Pencil className="h-4 w-4" />
                             </button>
-                            <button onClick={() => handleDelete(p.id)} className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50">
-                              <Trash2 className="h-4 w-4" />
+                            <button onClick={() => handleDelete(p.id)} disabled={deletingId === p.id}
+                              className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 disabled:opacity-40">
+                              {deletingId === p.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
                             </button>
                           </div>
                         </td>

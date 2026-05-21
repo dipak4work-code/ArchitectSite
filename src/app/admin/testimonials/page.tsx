@@ -6,15 +6,8 @@ import { ImageUpload } from '@/components/admin/ImageUpload'
 import { Plus, Pencil, Trash2, Star, Search, Loader2 } from 'lucide-react'
 
 type Testimonial = {
-  id: string
-  name: string
-  position: string
-  company: string
-  content: string
-  rating: number
-  image: string
-  approved: boolean
-  createdAt: string
+  id: string; name: string; position: string; company: string
+  content: string; rating: number; image: string; approved: boolean; createdAt: string
 }
 
 const emptyForm = { name: '', position: '', company: '', content: '', rating: 5, image: '', approved: true }
@@ -23,10 +16,12 @@ export default function AdminTestimonials() {
   const [items, setItems] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState(emptyForm)
+  const [error, setError] = useState('')
 
   async function fetchItems() {
     setLoading(true)
@@ -55,8 +50,22 @@ export default function AdminTestimonials() {
 
   async function handleDelete(id: string) {
     if (!confirm('Delete this testimonial?')) return
-    await fetch(`/api/testimonials/${id}`, { method: 'DELETE' })
-    setItems(prev => prev.filter(t => t.id !== id))
+    setDeletingId(id)
+    try {
+      const res = await fetch(`/api/testimonials/${id}`, { method: 'DELETE' })
+      const data = await res.json()
+      if (data.success) {
+        setItems(prev => prev.filter(t => t.id !== id))
+      } else {
+        setError('Delete failed. Please try again.')
+        setTimeout(() => setError(''), 4000)
+      }
+    } catch {
+      setError('Delete failed. Please try again.')
+      setTimeout(() => setError(''), 4000)
+    } finally {
+      setDeletingId(null)
+    }
   }
 
   async function handleToggle(t: Testimonial) {
@@ -65,7 +74,12 @@ export default function AdminTestimonials() {
       body: JSON.stringify({ approved: !t.approved })
     })
     const data = await res.json()
-    if (data.success) setItems(prev => prev.map(i => i.id === t.id ? data.data : i))
+    if (data.success) {
+      setItems(prev => prev.map(i => i.id === t.id ? data.data : i))
+    } else {
+      setError('Update failed. Please try again.')
+      setTimeout(() => setError(''), 4000)
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -76,10 +90,12 @@ export default function AdminTestimonials() {
         const res = await fetch(`/api/testimonials/${editingId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
         const data = await res.json()
         if (data.success) setItems(prev => prev.map(i => i.id === editingId ? data.data : i))
+        else { setError('Save failed.'); setTimeout(() => setError(''), 4000) }
       } else {
         const res = await fetch('/api/testimonials', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
         const data = await res.json()
         if (data.success) setItems(prev => [data.data, ...prev])
+        else { setError('Add failed.'); setTimeout(() => setError(''), 4000) }
       }
       setShowForm(false)
     } finally {
@@ -99,6 +115,10 @@ export default function AdminTestimonials() {
           <Plus className="h-4 w-4" /> Add Testimonial
         </button>
       </div>
+
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">{error}</div>
+      )}
 
       <div className="relative max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -147,8 +167,9 @@ export default function AdminTestimonials() {
                   <button onClick={() => openEdit(t)} className="p-1.5 text-gray-400 hover:text-indigo-600 rounded-lg hover:bg-indigo-50">
                     <Pencil className="h-4 w-4" />
                   </button>
-                  <button onClick={() => handleDelete(t.id)} className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50">
-                    <Trash2 className="h-4 w-4" />
+                  <button onClick={() => handleDelete(t.id)} disabled={deletingId === t.id}
+                    className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 disabled:opacity-40">
+                    {deletingId === t.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
                   </button>
                 </div>
               </CardContent>
@@ -160,7 +181,6 @@ export default function AdminTestimonials() {
         </div>
       )}
 
-      {/* Modal */}
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
@@ -168,14 +188,8 @@ export default function AdminTestimonials() {
               <h2 className="text-lg font-bold text-gray-900">{editingId ? 'Edit Testimonial' : 'Add Testimonial'}</h2>
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-5">
-              <ImageUpload
-                value={form.image}
-                onChange={url => setForm(f => ({ ...f, image: url }))}
-                folder="architect-site/testimonials"
-                label="Client Photo"
-                aspectRatio="aspect-square"
-              />
-
+              <ImageUpload value={form.image} onChange={url => setForm(f => ({ ...f, image: url }))}
+                folder="architect-site/testimonials" label="Client Photo" aspectRatio="aspect-square" />
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
@@ -188,19 +202,16 @@ export default function AdminTestimonials() {
                     className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
                 </div>
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Company *</label>
                 <input type="text" required value={form.company} onChange={e => setForm(f => ({ ...f, company: e.target.value }))}
                   className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Testimonial *</label>
                 <textarea required rows={4} value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
                   className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900" />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
                 <div className="flex gap-1">
@@ -211,18 +222,14 @@ export default function AdminTestimonials() {
                   ))}
                 </div>
               </div>
-
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" checked={form.approved} onChange={e => setForm(f => ({ ...f, approved: e.target.checked }))}
                   className="rounded border-gray-300" />
                 <span className="text-sm font-medium text-gray-700">Approved / Publish on site</span>
               </label>
-
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowForm(false)}
-                  className="flex-1 border border-gray-200 text-gray-700 py-2.5 rounded-xl text-sm hover:bg-gray-50 transition-colors">
-                  Cancel
-                </button>
+                  className="flex-1 border border-gray-200 text-gray-700 py-2.5 rounded-xl text-sm hover:bg-gray-50 transition-colors">Cancel</button>
                 <button type="submit" disabled={saving}
                   className="flex-1 bg-slate-900 text-white py-2.5 rounded-xl text-sm hover:bg-slate-800 transition-colors flex items-center justify-center gap-2">
                   {saving && <Loader2 className="h-4 w-4 animate-spin" />}

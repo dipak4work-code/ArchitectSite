@@ -21,6 +21,8 @@ export default function AdminMessages() {
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState<'all' | 'unread' | 'read'>('all')
   const [selected, setSelected] = useState<Message | null>(null)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [error, setError] = useState('')
 
   async function fetchMessages() {
     setLoading(true)
@@ -61,9 +63,24 @@ export default function AdminMessages() {
   }
 
   async function handleDelete(id: string) {
-    await fetch(`/api/messages/${id}`, { method: 'DELETE' })
-    setMessages(prev => prev.filter(m => m.id !== id))
-    if (selected?.id === id) setSelected(null)
+    if (!confirm('Delete this message?')) return
+    setDeletingId(id)
+    try {
+      const res = await fetch(`/api/messages/${id}`, { method: 'DELETE' })
+      const data = await res.json()
+      if (data.success) {
+        setMessages(prev => prev.filter(m => m.id !== id))
+        if (selected?.id === id) setSelected(null)
+      } else {
+        setError('Delete failed. Please try again.')
+        setTimeout(() => setError(''), 4000)
+      }
+    } catch {
+      setError('Delete failed. Please try again.')
+      setTimeout(() => setError(''), 4000)
+    } finally {
+      setDeletingId(null)
+    }
   }
 
   const unreadCount = messages.filter(m => !m.read).length
@@ -93,6 +110,10 @@ export default function AdminMessages() {
           <RefreshCw className="h-4 w-4" /> Refresh
         </button>
       </div>
+
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">{error}</div>
+      )}
 
       <div className="grid lg:grid-cols-5 gap-6">
         {/* Message List */}
@@ -171,9 +192,9 @@ export default function AdminMessages() {
                       {formatDate(selected.createdAt)} at {formatTime(selected.createdAt)}
                     </p>
                   </div>
-                  <button onClick={() => handleDelete(selected.id)}
-                    className="p-2 text-gray-400 hover:text-red-600 rounded-xl hover:bg-red-50 transition-colors">
-                    <Trash2 className="h-4 w-4" />
+                  <button onClick={() => handleDelete(selected.id)} disabled={deletingId === selected.id}
+                    className="p-2 text-gray-400 hover:text-red-600 rounded-xl hover:bg-red-50 transition-colors disabled:opacity-40">
+                    {deletingId === selected.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
                   </button>
                 </div>
 

@@ -6,7 +6,14 @@
       "PowerShell(New-Item -ItemType Directory -Force -Path \"d:\\\\Softwares\\\\ArchitectSite\\\\android\\\\app\\\\src\\\\main\\\\assets\")",
       "Bash(npx cap *)",
       "Bash(npx tsc *)",
-      "Bash(del fix-chars.js)"
+      "Bash(del fix-chars.js)",
+      "Bash(npx next *)",
+      "Bash(cat .eslintrc.json)",
+      "Bash(cat .eslintrc.js)",
+      "Bash(cat .eslintrc)",
+      "Bash(cat next.config.js)",
+      "Bash(cat next.config.mjs)",
+      "Bash(cat next.config.ts)"
     ],
     "additionalDirectories": [
       "d:\\Softwares\\ArchitectSite\\public"

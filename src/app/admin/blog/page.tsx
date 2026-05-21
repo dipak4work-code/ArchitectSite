@@ -30,6 +30,9 @@ export default function AdminBlog() {
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState(emptyForm)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [togglingId, setTogglingId] = useState<string | null>(null)
+  const [error, setError] = useState('')
 
   async function fetchPosts() {
     setLoading(true)
@@ -59,8 +62,44 @@ export default function AdminBlog() {
 
   async function handleDelete(id: string) {
     if (!confirm('Delete this post?')) return
-    await fetch(`/api/blog/${id}`, { method: 'DELETE' })
-    setPosts(prev => prev.filter(p => p.id !== id))
+    setDeletingId(id)
+    try {
+      const res = await fetch(`/api/blog/${id}`, { method: 'DELETE' })
+      const data = await res.json()
+      if (data.success) {
+        setPosts(prev => prev.filter(p => p.id !== id))
+      } else {
+        setError('Delete failed. Please try again.')
+        setTimeout(() => setError(''), 4000)
+      }
+    } catch {
+      setError('Delete failed. Please try again.')
+      setTimeout(() => setError(''), 4000)
+    } finally {
+      setDeletingId(null)
+    }
+  }
+
+  async function handleTogglePublish(p: Post) {
+    setTogglingId(p.id)
+    try {
+      const res = await fetch(`/api/blog/${p.id}`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ published: !p.published })
+      })
+      const data = await res.json()
+      if (data.success) {
+        setPosts(prev => prev.map(post => post.id === p.id ? data.data : post))
+      } else {
+        setError('Update failed. Please try again.')
+        setTimeout(() => setError(''), 4000)
+      }
+    } catch {
+      setError('Update failed. Please try again.')
+      setTimeout(() => setError(''), 4000)
+    } finally {
+      setTogglingId(null)
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -71,10 +110,12 @@ export default function AdminBlog() {
         const res = await fetch(`/api/blog/${editingId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
         const data = await res.json()
         if (data.success) setPosts(prev => prev.map(p => p.id === editingId ? data.data : p))
+        else { setError('Save failed. Please try again.'); setTimeout(() => setError(''), 4000) }
       } else {
         const res = await fetch('/api/blog', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
         const data = await res.json()
         if (data.success) setPosts(prev => [data.data, ...prev])
+        else { setError('Add failed. Please try again.'); setTimeout(() => setError(''), 4000) }
       }
       setShowForm(false)
     } finally {
@@ -94,6 +135,10 @@ export default function AdminBlog() {
           <Plus className="h-4 w-4" /> New Post
         </button>
       </div>
+
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">{error}</div>
+      )}
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
@@ -153,11 +198,16 @@ export default function AdminBlog() {
                       <td className="px-6 py-4 text-sm text-gray-400">{new Date(p.createdAt).toLocaleDateString()}</td>
                       <td className="px-6 py-4">
                         <div className="flex items-center justify-end gap-1">
+                          <button onClick={() => handleTogglePublish(p)} disabled={togglingId === p.id}
+                            className={`text-xs px-2 py-1 rounded-lg font-medium transition-colors disabled:opacity-40 ${p.published ? 'bg-yellow-50 text-yellow-700 hover:bg-yellow-100' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}>
+                            {togglingId === p.id ? <Loader2 className="h-3 w-3 animate-spin" /> : (p.published ? 'Unpublish' : 'Publish')}
+                          </button>
                           <button onClick={() => openEdit(p)} className="p-1.5 text-gray-400 hover:text-indigo-600 rounded-lg hover:bg-indigo-50">
                             <Pencil className="h-4 w-4" />
                           </button>
-                          <button onClick={() => handleDelete(p.id)} className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50">
-                            <Trash2 className="h-4 w-4" />
+                          <button onClick={() => handleDelete(p.id)} disabled={deletingId === p.id}
+                            className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 disabled:opacity-40">
+                            {deletingId === p.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
                           </button>
                         </div>
                       </td>
