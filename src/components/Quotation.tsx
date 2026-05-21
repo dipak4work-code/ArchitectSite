@@ -370,7 +370,7 @@ export function Quotation() {
                           const dim = bedroomDims[key] ?? item.defaultDim
                           const tot = brItemTotal(item, brIdx)
                           return (
-                            <ItemRow key={item.id} sr={sr} item={item} dim={dim} tot={tot} isFixed={false}
+                            <ItemRow key={item.id} sr={sr} item={item} dim={dim} tot={tot} isFixed={item.rateType === 'fixed'}
                               onDimChange={val => setBedroomDims(d => ({ ...d, [key]: val }))} />
                           )
                         })}

@@ -43,6 +43,7 @@ export default function AdminQuotation() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState(false)
   const [expandedSec, setExpandedSec] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
@@ -62,14 +63,24 @@ export default function AdminQuotation() {
   async function handleSave() {
     if (!config) return
     setSaving(true)
+    setSaveError(false)
     try {
-      await fetch('/api/quotation', {
+      const res = await fetch('/api/quotation', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(config),
       })
-      setSaved(true)
-      setTimeout(() => setSaved(false), 3000)
+      const json = await res.json()
+      if (json.success) {
+        setSaved(true)
+        setTimeout(() => setSaved(false), 3000)
+      } else {
+        setSaveError(true)
+        setTimeout(() => setSaveError(false), 4000)
+      }
+    } catch {
+      setSaveError(true)
+      setTimeout(() => setSaveError(false), 4000)
     } finally {
       setSaving(false)
     }
@@ -190,6 +201,7 @@ export default function AdminQuotation() {
         </div>
         <div className="flex items-center gap-3">
           {saved && <span className="text-sm text-green-600 font-medium">Saved!</span>}
+          {saveError && <span className="text-sm text-red-500 font-medium">Save failed. Try again.</span>}
           <button onClick={handleSave} disabled={saving}
             className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl hover:bg-slate-800 transition-colors text-sm font-medium">
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
@@ -498,7 +510,9 @@ export default function AdminQuotation() {
         </CardContent>
       </Card>
 
-      <div className="flex justify-end pb-8">
+      <div className="flex items-center justify-end gap-4 pb-8">
+        {saveError && <span className="text-sm text-red-500 font-medium">Save failed. Try again.</span>}
+        {saved && <span className="text-sm text-green-600 font-medium">Saved successfully!</span>}
         <button onClick={handleSave} disabled={saving}
           className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl hover:bg-slate-800 transition-colors font-medium">
           {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
