@@ -1,0 +1,23 @@
+[
+  {
+    "id": "main",
+    "general": {
+      "siteName": "Shreeji Associate",
+      "tagline": "Building Dreams",
+      "email": "jayshah5059@gmail.com",
+      "phone": "+91 9173034401",
+      "address": "FF 1, Sheeltal Plaza"
+    },
+    "social": {
+      "instagram": "https://instagram.com/shreejiassociate",
+      "facebook": "https://facebook.com/shreejiassociate",
+      "twitter": "",
+      "linkedin": ""
+    },
+    "seo": {
+      "metaTitle": "Test",
+      "metaDescription": "Test",
+      "keywords": "test"
+    }
+  }
+]

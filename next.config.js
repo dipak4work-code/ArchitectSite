@@ -4,12 +4,14 @@ const nextConfig = {
     domains: ['localhost'],
   },
   experimental: {
-    outputFileTracingIgnores: [
-      '**/@swc/core**',
-      '**/node_modules/@swc/core**',
-      '**/node_modules/webpack/**',
-      '**/node_modules/terser/**',
-    ],
+    outputFileTracingExcludes: {
+      '*': [
+        '**/@swc/core**',
+        '**/node_modules/@swc/core**',
+        '**/node_modules/webpack/**',
+        '**/node_modules/terser/**',
+      ],
+    },
   },
 }
 

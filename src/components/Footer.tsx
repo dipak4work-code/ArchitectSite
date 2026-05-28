@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Building2, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react'
 import Link from 'next/link'
 
@@ -22,14 +23,22 @@ const footerLinks = {
   ]
 }
 
-const socialLinks = [
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' }
-]
+const SOCIAL_ICONS = { facebook: Facebook, twitter: Twitter, instagram: Instagram, linkedin: Linkedin }
 
 export function Footer() {
+  const [social, setSocial] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(r => r.json())
+      .then(data => { if (data.success) setSocial(data.data.social || {}) })
+      .catch(() => {})
+  }, [])
+
+  const socialLinks = (Object.entries(SOCIAL_ICONS) as [string, typeof Facebook][])
+    .filter(([key]) => social[key])
+    .map(([key, icon]) => ({ icon, href: social[key], label: key }))
+
   return (
     <footer style={{ background: '#0D0D0D' }}>
       {/* Gold top line */}
@@ -56,14 +65,10 @@ export function Footer() {
             </p>
 
             <div className="flex gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 text-white/35 hover:border-[#C9A250]/50 hover:text-[#C9A250] transition-all duration-300"
-                >
-                  <social.icon className="h-4 w-4" />
+              {socialLinks.map((s) => (
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
+                  className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 text-white/35 hover:border-[#C9A250]/50 hover:text-[#C9A250] transition-all duration-300">
+                  <s.icon className="h-4 w-4" />
                 </a>
               ))}
             </div>

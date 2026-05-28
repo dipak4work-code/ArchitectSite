@@ -15,6 +15,7 @@ type Testimonial = {
 
 const stats = [
   { value: '40+', label: 'Projects Completed' },
+  { value: '14+', label: 'Ongoing Projects' },
   { value: '6+', label: 'Years Experience' },
   { value: '25+', label: 'Turnkey Projects' },
   { value: '40+', label: 'Happy Clients' },
@@ -104,7 +105,7 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden"
+          className="grid grid-cols-2 md:grid-cols-5 gap-px rounded-2xl overflow-hidden"
           style={{ background: '#C9A250' }}
         >
           {stats.map(stat => (

@@ -183,6 +183,17 @@
         "rateType": "per_sqft",
         "rate": 600,
         "defaultDim": 13
+      },
+      {
+        "id": "br_item_1779378926267",
+        "label": "Side Corner",
+        "specs": [
+          "Gurgen 18mm Plywood"
+        ],
+        "dimUnit": "Sq.Ft",
+        "rateType": "per_sqft",
+        "rate": 1500,
+        "defaultDim": 10
       }
     ]
   },
